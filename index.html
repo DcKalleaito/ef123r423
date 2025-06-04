@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Message</title>
+  <style>
+    /* Set up body */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f0f0f 25%, #1a1a1a 75%);
+      background-size: 400% 400%;
+      animation: bgShift 15s ease infinite;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animate background */
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Red bloody glitch text */
+    .glitch {
+      font-size: 3rem;
+      color: red;
+      position: relative;
+      text-transform: uppercase;
+      text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+      animation: glitch 2s infinite;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      animation: glitchTop 2s infinite;
+      top: -2px;
+      color: #ff0000aa;
+    }
+
+    .glitch::after {
+      animation: glitchBottom 2s infinite;
+      top: 2px;
+      color: #ff0033aa;
+    }
+
+    @keyframes glitch {
+      0% { transform: none; }
+      20% { transform: skew(-0.5deg, 0.5deg); }
+      40% { transform: skew(0.5deg, -0.5deg); }
+      60% { transform: skew(-1deg, 0deg); }
+      80% { transform: skew(1deg, 1deg); }
+      100% { transform: none; }
+    }
+
+    @keyframes glitchTop {
+      0% { clip-path: inset(0 0 80% 0); }
+      50% { clip-path: inset(0 0 30% 0); transform: translate(-2px, -2px); }
+      100% { clip-path: inset(0 0 80% 0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip-path: inset(80% 0 0 0); }
+      50% { clip-path: inset(30% 0 0 0); transform: translate(2px, 2px); }
+      100% { clip-path: inset(80% 0 0 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glitch" data-text="I know you were born in 2014 coolguy.">
+    I know you were born in 2014 coolguy.
+  </div>
+</body>
+</html>
