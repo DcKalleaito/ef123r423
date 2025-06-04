@@ -12,7 +12,29 @@
       overflow: hidden;
     }
 
-    audio {
+    .start-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      color: red;
+      border: 2px solid red;
+      padding: 20px 40px;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 5;
+      text-shadow: 0 0 10px crimson;
+      animation: flickerBtn 1s infinite alternate;
+    }
+
+    @keyframes flickerBtn {
+      0% { opacity: 0.8; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .hidden {
       display: none;
     }
 
@@ -61,6 +83,16 @@
       text-shadow: 0 0 5px red;
     }
 
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,0,0,0.05) 5px);
+      animation: overlayAnim 0.5s infinite;
+      z-index: 1;
+    }
+
     @keyframes flicker {
       0%, 100% { opacity: 0.9; }
       50% { opacity: 0.1; }
@@ -80,16 +112,6 @@
       100% { transform: translate(-50%, 5px); }
     }
 
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,0,0,0.05) 5px);
-      animation: overlayAnim 0.5s infinite;
-      z-index: 1;
-    }
-
     @keyframes overlayAnim {
       0% { opacity: 0.03; }
       50% { opacity: 0.1; }
@@ -97,25 +119,32 @@
     }
   </style>
 </head>
-<body onload="showInfo()">
-  <!-- 🔊 Scream Sound -->
-  <audio autoplay loop>
+<body>
+  <!-- Scream Sound -->
+  <audio id="scream" loop>
     <source src="https://raw.githubusercontent.com/DcKalleaito/ef123r423/main/Tortured%20Distorted%20Scream%20Sound%20Effect%20865.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
   </audio>
 
-  <div class="overlay"></div>
+  <!-- Start Button -->
+  <button class="start-button" onclick="startExperience()">ENTER THE DARK</button>
 
-  <div class="message">YOU SHOULDN'T BE HERE</div>
-  <div class="smiley">:) </div>
-
-  <button class="button" onclick="alert('THERE IS NO ESCAPE')">DON'T CLICK</button>
-
-  <div class="info" id="info-box">
-    Loading info...
+  <!-- Hidden Haunted Content -->
+  <div id="haunted-content" class="hidden">
+    <div class="overlay"></div>
+    <div class="message">YOU SHOULDN'T BE HERE</div>
+    <div class="smiley">:) </div>
+    <button class="button" onclick="alert('THERE IS NO ESCAPE')">DON'T CLICK</button>
+    <div class="info" id="info-box">Loading info...</div>
   </div>
 
   <script>
+    function startExperience() {
+      document.querySelector('.start-button').classList.add('hidden');
+      document.getElementById('haunted-content').classList.remove('hidden');
+      document.getElementById('scream').play();
+      showInfo();
+    }
+
     function showInfo() {
       const info = `
       Browser: ${navigator.userAgent}
